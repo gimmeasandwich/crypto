@@ -1,3 +1,5 @@
+## The purpose of this fork is to export argon2d for cryptocurrency applications
+
 # Go Cryptography
 
 This repository holds supplementary Go cryptography libraries.
