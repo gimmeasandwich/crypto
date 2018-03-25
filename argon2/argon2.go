@@ -99,6 +99,19 @@ func IDKey(password, salt []byte, time, memory uint32, threads uint8, keyLen uin
 	return deriveKey(argon2id, password, salt, nil, nil, time, memory, threads, keyLen)
 }
 
+// DKey derives a key from the password, salt, and cost parameters using
+// Argon2d returning a byte slice of length keyLen that can be used as
+// cryptographic key. The CPU cost and parallelism degree must be greater than
+// zero.
+//
+// Use this function carefully. It is not exported in the main repo because it
+// is not the most secure variant of Argon2 for general use. For general use,
+// look to use Argon2i or Argon2id instead. Argon2d is recommended for
+// cryptocurrency mining which is why it is exported in this repo.
+func DKey(password, salt []byte, time, memory uint32, threads uint8, keyLen uint32) []byte {
+	return deriveKey(argon2d, password, salt, nil, nil, time, memory, threads, keyLen)
+}
+
 func deriveKey(mode int, password, salt, secret, data []byte, time, memory uint32, threads uint8, keyLen uint32) []byte {
 	if time < 1 {
 		panic("argon2: number of rounds too small")
